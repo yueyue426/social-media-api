@@ -62,7 +62,7 @@ module.exports = {
         }
     },
     // Add a friend to the user's friend list
-    async addFriend(req, res){
+    async addFriend(req, res) {
         try {
             const user = await User.findByIdAndUpdate(
                 req.params.id,
@@ -77,7 +77,7 @@ module.exports = {
         }
     },
     // Remove a friend from the user's friend list
-    async removeFriend(req, res){
+    async removeFriend(req, res) {
         try {
             const user = await User.findByIdAndUpdate(
                 req.params.id,
