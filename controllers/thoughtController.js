@@ -1,11 +1,10 @@
-const Thought = require('../models/Thought');
-const User = require('../models/User');
+const { Thought , User } = require('../models');
 
 module.exports = {
     // Get all thoughts
     async getThoughts(req, res) {
         try {
-            const thoughts = await Thought.find();
+            const thoughts = await Thought.find().select('-__v');
             res.json(thoughts);
         } catch (err) {
             res.status(500).json(err);
@@ -14,7 +13,7 @@ module.exports = {
     // Get a thought by ID
     async getSingleThought(req, res) {
         try {
-            const thought = await Thought.findOne({ _id: req.params.thoughtId });
+            const thought = await Thought.findOne({ _id: req.params.id}).select('-__v');
             if (!thought) {
                 return res.status(404).json({ message: "No thought found with that id "});
             }
@@ -27,6 +26,13 @@ module.exports = {
     async createThought(req, res) {
         try {
             const thought = await Thought.create(req.body);
+            const user = await User.findByIdAndUpdate(
+                req.body.userId,
+                { $push: { thoughts: thought._id } },
+                { new: true });
+            if (!user) {
+                return res.status(404).json({ message: "No user found with that id"});
+            }
             res.json(thought);
         } catch (err) {
             res.status(500).json(err);
