@@ -64,5 +64,5 @@ Use a tool like Insomnia or Postman to interact with the API. You can perform CR
 This project is licensed under the [MIT](https://opensource.org/licenses/MIT) License.
 
 ## Mock-Up
-
+![Mock-Up](./assets/demo.png)
 
